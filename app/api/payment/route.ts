@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { snap } from '@/lib/midtrans' // gunakan helper agar aman dari lint
+import { snap } from '@/lib/midtrans' // .js tetap bisa di-import dari .ts
 
 export async function POST(req: NextRequest) {
   const { orderId, items, total } = await req.json()
