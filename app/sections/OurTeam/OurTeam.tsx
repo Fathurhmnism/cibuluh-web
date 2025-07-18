@@ -23,7 +23,6 @@ const teamMembers = [
     position: 'CFO',
     image: '/apta.png'
   },
-
   {
     name: 'Ahmad Nabiel Kafif',
     position: 'Ome Master',
@@ -49,7 +48,7 @@ const OurTeam = () => {
         ))}
       </div>
       <p className={styles.description}>
-        Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.
+        Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry&apos;s standard dummy text ever since the unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.
       </p>
     </section>
   )

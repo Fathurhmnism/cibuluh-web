@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useContext } from "react";
 import { useCart } from "../../contexts/cartContext";
 import styles from "./ProductShowcase.module.css";
 

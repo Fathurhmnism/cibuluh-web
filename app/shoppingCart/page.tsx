@@ -12,6 +12,16 @@ declare global {
   }
 }
 
+// ✅ Tambahkan tipe data CartItem
+type CartItem = {
+  id: number
+  name: string
+  desc: string
+  image: string
+  price: number
+  quantity: number
+}
+
 const ShoppingCart = () => {
   const { cartItems, updateQuantity, removeFromCart } = useCart()
 
@@ -51,7 +61,6 @@ const ShoppingCart = () => {
         window.snap.pay(data.token, {
           onSuccess: async function () {
             try {
-              // Ambil status terbaru dan simpan hanya jika status = 'settlement' atau 'capture'
               const statusRes = await fetch(`/api/payment/status?orderId=${orderId}`)
               const statusData = await statusRes.json()
 
@@ -63,7 +72,7 @@ const ShoppingCart = () => {
               } else {
                 alert(`ℹ️ Transaksi belum diselesaikan. Status: ${statusData.transaction_status}`)
               }
-            } catch (err) {
+            } catch {
               alert('Pembayaran berhasil, tapi gagal update status ke database.')
             }
           },
@@ -101,7 +110,7 @@ const ShoppingCart = () => {
           <p className={styles.empty}>Your cart is empty.</p>
         ) : (
           <>
-            {cartItems.map((item) => (
+            {cartItems.map((item: CartItem) => (
               <div key={item.id} className={styles.itemRow}>
                 <div className={styles.imageWrapper}>
                   <Image

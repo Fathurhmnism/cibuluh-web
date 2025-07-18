@@ -1,8 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { snap } from '@/lib/midtrans' // .js tetap bisa di-import dari .ts
+import { snap } from '@/lib/midtrans'
+
+// ✅ Buat tipe data untuk item
+type Item = {
+  id: string
+  name: string
+  price: number
+  quantity: number
+}
 
 export async function POST(req: NextRequest) {
-  const { orderId, items, total } = await req.json()
+  const { orderId, items, total }: {
+    orderId: string
+    items: Item[]
+    total: number
+  } = await req.json()
 
   if (!orderId || !items || !total) {
     return NextResponse.json({ error: 'Data order tidak lengkap' }, { status: 400 })
@@ -13,7 +25,7 @@ export async function POST(req: NextRequest) {
       order_id: orderId,
       gross_amount: total,
     },
-    item_details: items.map((item: any) => ({
+    item_details: items.map((item: Item) => ({
       id: item.id,
       name: item.name,
       price: item.price,
@@ -27,8 +39,9 @@ export async function POST(req: NextRequest) {
   try {
     const transaction = await snap.createTransaction(parameter)
     return NextResponse.json({ token: transaction.token })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ Gagal membuat transaksi Midtrans:', error)
-    return NextResponse.json({ error: 'Gagal membuat transaksi', debug: error?.message || error }, { status: 500 })
+    const errMsg = error instanceof Error ? error.message : 'Unknown error'
+    return NextResponse.json({ error: 'Gagal membuat transaksi', debug: errMsg }, { status: 500 })
   }
 }
