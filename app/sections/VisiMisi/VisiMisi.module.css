@@ -1,0 +1,61 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh;
+}
+
+.card {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  z-index: 0;
+}
+
+.colorLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.4;
+}
+
+
+/* === Overlay Styling === */
+.overlay {
+  position: absolute;
+  z-index: 2;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.3) transparent;
+  backdrop-filter: blur(2px);
+  max-width: 70%;
+  color: white;
+}
+
+/* === Posisi Spesifik === */
+.topLeft {
+  top: 5rem;
+  left: 1rem;
+  text-align: left;
+}
+
+.bottomRight {
+  bottom: 1rem;
+  right: 1rem;
+  text-align: right;
+}
+
+/* === Teks === */
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  font-weight: 400;
+}

@@ -1,0 +1,50 @@
+.container {
+  position: relative;
+  height: 250vh;
+  width: 100%;
+  padding: 64px;
+  text-align: center;
+  background-color: white;
+}
+
+.headline {
+  font-size: 28px;
+  color: #526841;
+  font-weight: 300;
+  margin-bottom: 48px;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.news {
+  background-color: #526841;
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  max-width: 500px;
+  text-align: left;
+}
+
+.readMore {
+  background-color: orange;
+  color: white;
+  padding: 8px 16px;
+  margin-top: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.readMore:hover {
+  background-color: darkorange;
+}

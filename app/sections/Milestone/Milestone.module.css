@@ -1,0 +1,83 @@
+.section {
+  background-color: #f9f9f9;
+  padding: 64px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.leftText {
+  text-align: left;
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 48px;
+  font-family: 'Inter', sans-serif;
+}
+
+.subtitle {
+  color: #526841;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.heading {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #1f2937; /* sama dengan .title section lain */
+  font-family: 'Inter', sans-serif;
+}
+
+.timeline {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.timelineItem {
+  display: flex;
+  gap: 16px;
+}
+
+.iconBox {
+  background-color: #526841; /* hijau kamu */
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.details {
+  flex: 1;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+}
+
+.date {
+  color: #526841; /* hijau kamu */
+  font-size: 14px;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #1f2937;
+}
+
+.description {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.6;
+}
