@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-const midtransClient = require('midtrans-client')
+import { snap } from '@/lib/midtrans' // gunakan helper agar aman dari lint
 
 export async function POST(req: NextRequest) {
   const { orderId, items, total } = await req.json()
@@ -7,11 +7,6 @@ export async function POST(req: NextRequest) {
   if (!orderId || !items || !total) {
     return NextResponse.json({ error: 'Data order tidak lengkap' }, { status: 400 })
   }
-
-  const snap = new midtransClient.Snap({
-    isProduction: false,
-    serverKey: process.env.MIDTRANS_SERVER_KEY,
-  })
 
   const parameter = {
     transaction_details: {
