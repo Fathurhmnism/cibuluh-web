@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cibulu Berdaya — Web
 
-## Getting Started
+Company profile dan toko online beras Cibulu Berdaya. Dibangun dengan Next.js 15 (App Router), MongoDB Atlas, dan Midtrans (sandbox).
 
-First, run the development server:
+> Status: proyek portofolio, sedang dikembangkan ulang secara bertahap.
+> Tahap 1 (fondasi: build bersih dan siap deploy) selesai.
+
+## Menjalankan secara lokal
 
 ```bash
+npm install
+cp .env.example .env.local   # lalu isi nilainya
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Nama | Keterangan |
+| --- | --- |
+| `MONGODB_URI` | Connection string MongoDB Atlas |
+| `MIDTRANS_SERVER_KEY` | Server key Midtrans **sandbox** |
+| `NEXT_PUBLIC_MIDTRANS_CLIENT_KEY` | Client key Midtrans **sandbox** |
 
-## Learn More
+## Deploy ke Vercel
 
-To learn more about Next.js, take a look at the following resources:
+1. Import repo ini di Vercel (framework terdeteksi otomatis sebagai Next.js).
+2. Isi ketiga environment variable di atas di *Project Settings → Environment Variables*.
+3. Deploy.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Struktur
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/
+  api/            # Route handler: auth, order, payment
+  sections/       # Section halaman utama dan About Us
+  components/     # Navbar, Footer, form, dll.
+  contexts/       # State keranjang dan user
+lib/              # Koneksi MongoDB dan Midtrans
+types/            # Deklarasi tipe untuk paket tanpa tipe
+```
 
-## Deploy on Vercel
+## Roadmap
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [x] Tahap 1: build bersih, tanpa error lint/type, siap deploy
+- [ ] Tahap 2: alur bisnis end-to-end (produk di DB, harga dihitung di server, status pesanan, webhook Midtrans, panel admin)
+- [ ] Tahap 3: auth aman dengan role, validasi, automated test, CI
+- [ ] Tahap 4: polish UI, akun demo, studi kasus dengan diagram proses

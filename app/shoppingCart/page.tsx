@@ -6,9 +6,16 @@ import { Plus, Minus, X } from 'lucide-react'
 import { useCart } from '../contexts/cartContext'
 import styles from './ShoppingCart.module.css'
 
+type SnapCallbacks = {
+  onSuccess?: () => void
+  onPending?: () => void
+  onError?: () => void
+  onClose?: () => void
+}
+
 declare global {
   interface Window {
-    snap: any
+    snap: { pay: (token: string, callbacks: SnapCallbacks) => void }
   }
 }
 

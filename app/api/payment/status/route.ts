@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { connectToDatabase } from '@/lib/mongodb'
-const midtransClient = require('midtrans-client')
+import { snap } from '@/lib/midtrans'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
@@ -10,15 +10,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Order ID tidak ditemukan' }, { status: 400 })
   }
 
-  const serverKey = process.env.MIDTRANS_SERVER_KEY
-  if (!serverKey) {
+  if (!process.env.MIDTRANS_SERVER_KEY) {
     return NextResponse.json({ error: 'MIDTRANS_SERVER_KEY tidak tersedia' }, { status: 500 })
   }
-
-  const snap = new midtransClient.Snap({
-    isProduction: false,
-    serverKey,
-  })
 
   try {
     const status = await snap.transaction.status(orderId)
@@ -50,14 +44,8 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(status)
-  } catch (error: any) {
-    console.error('❌ Gagal ambil status:', error?.ApiResponse || error)
-    return NextResponse.json(
-      {
-        error: 'Gagal ambil status',
-        debug: error?.ApiResponse || error?.message || error,
-      },
-      { status: 500 }
-    )
+  } catch (error: unknown) {
+    console.error('❌ Gagal ambil status:', error)
+    return NextResponse.json({ error: 'Gagal ambil status' }, { status: 500 })
   }
 }

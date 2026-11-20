@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import styles from './Artikel.module.css'
 
@@ -74,7 +75,7 @@ const Page = () => {
       <div className={styles.grid}>
         {articles.map((article) => (
           <div key={article.slug} className={styles.card}>
-            <img src={article.image} alt={article.title} className={styles.image} />
+            <Image src={article.image} alt={article.title} width={600} height={180} className={styles.image} />
             <div className={styles.contentBox}>
               <h2 className={styles.title}>{article.title}</h2>
               <p className={styles.excerpt}>{article.excerpt}</p>

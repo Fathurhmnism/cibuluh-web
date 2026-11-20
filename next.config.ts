@@ -1,9 +1,5 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true, // ✅ tambahkan ini agar lint error tidak blokir build
-  },
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;
