@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import styles from '../Artikel.module.css'
@@ -137,13 +138,18 @@ const articles = [
   },
 ]
 
-const Page = ({ params }: { params: { slug: string } }) => {
-  const article = articles.find((item) => item.slug === params.slug)
+export function generateStaticParams() {
+  return articles.map((item) => ({ slug: item.slug }))
+}
+
+const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = await params
+  const article = articles.find((item) => item.slug === slug)
   if (!article) return notFound()
 
   return (
     <main className={styles.articleWrapper}>
-      <img src={article.image} alt={article.title} className={styles.heroImage} />
+      <Image src={article.image} alt={article.title} width={1200} height={400} priority className={styles.heroImage} />
 
       <div className={styles.articleContainer}>
         <Link href="/Artikel" className={styles.backLink}>← Kembali ke Artikel</Link>
