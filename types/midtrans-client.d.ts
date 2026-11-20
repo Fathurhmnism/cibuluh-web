@@ -17,6 +17,7 @@ declare module 'midtrans-client' {
     createTransaction(parameter: Record<string, unknown>): Promise<{ token: string; redirect_url: string }>
     transaction: {
       status(orderId: string): Promise<TransactionStatus>
+      cancel(orderId: string): Promise<TransactionStatus>
       notification(body: Record<string, unknown>): Promise<TransactionStatus>
     }
   }

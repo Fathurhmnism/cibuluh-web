@@ -1,17 +1,30 @@
 import { MongoClient, Db } from 'mongodb'
 
-const uri = process.env.MONGODB_URI || ''
-const options = {}
+const DB_NAME = process.env.MONGODB_DB || 'cibuluberdaya'
 
-let client: MongoClient
-let db: Db
+// Simpan client di globalThis agar tidak membuat koneksi baru di setiap
+// hot reload (dev) atau setiap invocation serverless yang masih hangat.
+const globalForMongo = globalThis as unknown as { _mongoClient?: Promise<MongoClient> }
+
+export function isDatabaseConfigured(): boolean {
+  return Boolean(process.env.MONGODB_URI)
+}
+
+export function getClient(): Promise<MongoClient> {
+  const uri = process.env.MONGODB_URI
+  if (!uri) {
+    throw new Error('MONGODB_URI belum diatur')
+  }
+  if (!globalForMongo._mongoClient) {
+    globalForMongo._mongoClient = new MongoClient(uri).connect().catch((error) => {
+      globalForMongo._mongoClient = undefined
+      throw error
+    })
+  }
+  return globalForMongo._mongoClient
+}
 
 export async function connectToDatabase(): Promise<Db> {
-  if (db) return db
-
-  client = new MongoClient(uri, options)
-  await client.connect()
-  db = client.db('cibuluberdaya') // otomatis ambil dari nama di URI
-  console.log('✅ Terhubung ke MongoDB:', db.databaseName)
-  return db
+  const client = await getClient()
+  return client.db(DB_NAME)
 }

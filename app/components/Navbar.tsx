@@ -20,7 +20,7 @@ const Navbar = () => {
   const mapRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
 
-  const { cartItems } = useCart()
+  const { itemCount } = useCart()
   const { user, setUser } = useUser() // ⬅️ akses context user
 
   useEffect(() => {
@@ -86,6 +86,12 @@ const Navbar = () => {
               </Link>
               <Link href="/?scroll=Impact" scroll={false} className="block px-4 py-2 text-black hover:bg-gray-100">
                 Your Impact
+              </Link>
+              <Link href="/?scroll=Weight" scroll={false} className="block px-4 py-2 text-black hover:bg-gray-100">
+                Beli Curah
+              </Link>
+              <Link href="/lacak" className="block px-4 py-2 text-black hover:bg-gray-100">
+                Lacak Pesanan
               </Link>
               <Link href="/aboutUs" className="block px-4 py-2 text-black hover:bg-gray-100">
                 About Us
@@ -163,11 +169,11 @@ const Navbar = () => {
 
           {/* Cart */}
           <div className="relative">
-            <Link href="/shoppingCart">
+            <Link href="/shoppingCart" aria-label="Keranjang">
               <ShoppingCart className="w-8 h-8 text-black cursor-pointer hover:text-blue-500" />
-              {cartItems.length > 0 && (
+              {itemCount > 0 && (
                 <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
-                  {cartItems.reduce((total, item) => total + item.quantity, 0)}
+                  {itemCount}
                 </span>
               )}
             </Link>
