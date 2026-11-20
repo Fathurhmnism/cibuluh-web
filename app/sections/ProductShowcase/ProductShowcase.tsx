@@ -1,35 +1,29 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { useCart } from "../../contexts/cartContext";
+import type { ShowcaseProduct } from "@/lib/storefront";
 import styles from "./ProductShowcase.module.css";
+import { formatRupiah } from "@/lib/format";
 
-const products = [
-  {
-    id: 1,
-    name: "Beras Premium 5kg",
-    desc: "Putih bersih, pulen, dan tahan lama — ideal untuk konsumsi harian keluarga.",
-    image: "/5kg.png",
-    price: 88000,
-  },
-  {
-    id: 2,
-    name: "Beras Organik 10kg",
-    desc: "Diproduksi tanpa pestisida, ramah lingkungan dan sehat untuk tubuh.",
-    image: "/5kg.png",
-    price: 145000,
-  },
-  {
-    id: 3,
-    name: "Beras Super Pandan Wangi 5kg",
-    desc: "Beras dengan aroma khas pandan, tekstur sangat pulen dan lezat.",
-    image: "/5kg.png",
-    price: 88000,
-  },
-];
-
-const ProductShowcase = () => {
+const ProductShowcase = ({ products }: { products: ShowcaseProduct[] }) => {
   const { addToCart } = useCart();
+  const [added, setAdded] = useState<string | null>(null);
+
+  const handleAdd = (product: ShowcaseProduct) => {
+    addToCart({
+      productId: product.id,
+      kind: product.kind,
+      name: product.name,
+      image: product.image,
+      unitPrice: product.unitPrice,
+      kgPerUnit: product.kgPerUnit,
+      maxQuantity: product.maxQuantity,
+    });
+    setAdded(product.id);
+    setTimeout(() => setAdded((id) => (id === product.id ? null : id)), 1500);
+  };
 
   return (
     <section id="Product" className={styles.section}>
@@ -44,34 +38,40 @@ const ProductShowcase = () => {
       </h2>
 
       {/* Produk Grid */}
-      <div className={styles.grid}>
-        {products.map((product) => (
-          <div key={product.id} className={styles.card}>
-            <Image
-              src={product.image}
-              alt={product.name}
-              width={400}
-              height={500}
-              className={styles.image}
-            />
+      {products.length === 0 ? (
+        <p className={styles.empty}>Katalog sedang tidak tersedia. Silakan coba beberapa saat lagi.</p>
+      ) : (
+        <div className={styles.grid}>
+          {products.map((product) => {
+            const soldOut = product.maxQuantity < 1;
+            return (
+              <div key={product.id} className={styles.card}>
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  width={400}
+                  height={500}
+                  className={styles.image}
+                />
 
-            {/* Overlay Konten */}
-            <div className={styles.overlay}>
-              <h3 className={styles.title}>{product.name}</h3>
-              <p className={styles.desc}>{product.desc}</p>
-              <p className={styles.price}>
-                Rp {product.price.toLocaleString("id-ID")}
-              </p>
-              <button
-                className={styles.button}
-                onClick={() => addToCart(product)}
-              >
-                🛒 Add Cart
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+                {/* Overlay Konten */}
+                <div className={styles.overlay}>
+                  <h3 className={styles.title}>{product.name}</h3>
+                  <p className={styles.desc}>{product.description}</p>
+                  <p className={styles.price}>{formatRupiah(product.unitPrice)}</p>
+                  <button
+                    className={styles.button}
+                    onClick={() => handleAdd(product)}
+                    disabled={soldOut}
+                  >
+                    {soldOut ? "Stok habis" : added === product.id ? "✓ Masuk keranjang" : "🛒 Tambah ke keranjang"}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </section>
   );
 };

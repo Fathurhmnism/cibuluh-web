@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+/* Tailwind 4 memakai currentColor sebagai warna border bawaan; samakan dengan v3 (abu-abu muda) */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

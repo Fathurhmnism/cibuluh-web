@@ -83,3 +83,18 @@
 .button:hover {
   background-color: #eab308;
 }
+.button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.empty {
+  color: #4b5563;
+  padding: 48px 0;
+}
+
+@media (min-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
